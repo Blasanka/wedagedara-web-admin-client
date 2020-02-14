@@ -103,7 +103,6 @@ class Login extends React.Component {
           loading: false
         });
         this.props.history.push("/admin/dashboard");
-        console.log("logged in");
       })
       .catch(err => {
         console.error(err);

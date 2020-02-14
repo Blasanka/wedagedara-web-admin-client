@@ -21,6 +21,7 @@ const hist = createBrowserHistory();
 //   "http://localhost:5000/wedagedara-717e9/asia-east2/api";
 
 export default class App extends React.Component {
+  authenticated = false;
   constructor() {
     super();
     this.state = {
@@ -28,24 +29,15 @@ export default class App extends React.Component {
       token: localStorage.FBIdToken,
       isLoading: true
     };
-  }
 
-  componentDidMount() {
     if (this.state.token) {
       const decodedToken = jwtDecode(this.state.token);
       if (decodedToken.exp * 1000 < Date.now()) {
         localStorage.removeItem("FBIdToken");
         delete axios.defaults.headers.common["Authorization"];
-        this.setState({
-          authenticated: false,
-          isLoading: false
-        });
         window.location.href = "/login";
       } else {
-        this.setState({
-          authenticated: true,
-          isLoading: false
-        });
+        this.authenticated = true;
         axios.defaults.headers.common["Authorization"] = this.state.token;
       }
     }
@@ -58,11 +50,11 @@ export default class App extends React.Component {
           <Switch>
             {/* <Route path="/admin" component={Admin} /> */}
             <Route path="/profile" component={UserProfile} />
-            <LoginAuthRoute path="/login" component={Login} />
+            <Route path="/login" component={Login} />
             <AuthRoute
               path="/admin/dashboard"
               component={Admin}
-              authenticated={this.state.authenticated}
+              authenticated={this.authenticated}
             />
             <Route path="/admin" component={Admin} />
             <Redirect exact from="/admin" to="/admin/dashboard" />
