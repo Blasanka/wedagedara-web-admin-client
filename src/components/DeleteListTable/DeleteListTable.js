@@ -89,28 +89,42 @@ const styles = {
 class DeleteListTable extends React.Component {
   constructor() {
     super();
-    this.state = { state: false, selectedData: null };
+    this.state = { state: false, tableData: [], selectedData: null };
   }
 
-  handleRowClick = (flag, singleDoc) => {
-    this.setState({ state: flag, selectedData: singleDoc });
-    const submitRoute = `/${this.props.submitType}/${singleDoc.doctor_id}`;
+  handleRowClick = (flag, singleData) => {
+    this.setState({
+      state: flag,
+      selectedData: singleData,
+      isLoading: true
+    });
+    const deleteRoute = `/${this.props.submitType}/${singleData.id}`;
+    console.log(deleteRoute);
     axios
-      .delete(submitRoute)
+      .delete(deleteRoute)
       .then(res => {
-        this.setState({
-          doctors: res.data,
-          isLoading: false
-        });
+        if (res.data.message !== undefined) {
+          this.setState({
+            tableData: this.state.tableData.filter(
+              (_, i) => i !== this.state.tableData.indexOf(singleData)
+            ),
+            isLoading: false
+          });
+        }
       })
       .catch(err => {
         console.error(err);
       });
   };
 
+  componentDidMount() {
+    this.setState({
+      tableData: this.props.dataList
+    });
+  }
+
   render() {
-    const { tableHeders, dataList, isLoading, classes } = this.props;
-    const tableData = dataList;
+    const { tableHeders, isLoading, classes } = this.props;
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
@@ -131,7 +145,7 @@ class DeleteListTable extends React.Component {
                   <Table
                     tableHeaderColor="warning"
                     tableHead={tableHeders}
-                    tableData={tableData}
+                    tableData={this.state.tableData}
                     state={this.state.state}
                     handleRowClick={this.handleRowClick}
                   />

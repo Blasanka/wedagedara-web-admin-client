@@ -24,6 +24,7 @@ export default class MedicalView extends React.Component {
           places: res.data,
           isLoading: false
         });
+        console.log(this.state.places);
       })
       .catch(err => {
         console.error(err);
@@ -68,6 +69,7 @@ export default class MedicalView extends React.Component {
                   submitType={"place"}
                   cardSubHeader={"ව‌ෙද මැදුර‌ෙහි ත‌ොරතුරු ව‌ෙනස් කරන්න."}
                   textFieldsTypes={[
+                    "id",
                     "name",
                     "description",
                     "image_url",
@@ -82,7 +84,7 @@ export default class MedicalView extends React.Component {
               tabContent: (
                 <DeleteListTable
                   submitType={"place"}
-                  tableHeders={["නම", "ස්එනය", ""]} //"යොමු අංකය",
+                  tableHeders={["යොමු අංකය", "නම", ""]} //"යොමු අංකය",
                   dataList={this.state.places}
                   isLoading={this.state.isLoading}
                 />

@@ -50,12 +50,12 @@ function CustomTable(props) {
               >
                 {data.id !== undefined && <TableCell>{data.id}</TableCell>}
                 {data.name !== undefined && <TableCell>{data.name}</TableCell>}
-                {data.location !== undefined && (
+                {/* {data.location !== undefined && (
                   <TableCell>{data.location}</TableCell>
-                )}
-                {data.duration !== undefined && (
+                )} */}
+                {/* {data.duration !== undefined && (
                   <TableCell>{data.duration}</TableCell>
-                )}
+                )} */}
                 <TableCell>
                   <DeleteIcon className={classes.deleteIcon} />
                 </TableCell>

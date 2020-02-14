@@ -19,10 +19,8 @@
     "react-dom": "16.9.0",
     "react-google-maps": "9.4.5",
     "react-router-dom": "5.0.1",
-    "react-scripts": "3.1.0",
-    "react-swipeable-views": "0.13.3",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "react-scripts": "^3.3.1",
+    "react-swipeable-views": "0.13.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -56,5 +54,5 @@
     ],
     "development": []
   },
-  "proxy": "https://asia-east2-wedagedara-717e9.cloudfunctions.net/api"
+  "proxy": "http://localhost:5000/wedagedara-717e9/asia-east2/api"
 }

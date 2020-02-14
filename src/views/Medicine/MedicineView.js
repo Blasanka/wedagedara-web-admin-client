@@ -80,7 +80,7 @@ export default class MedicineView extends React.Component {
               tabContent: (
                 <DeleteListTable
                   submitType={"medication"}
-                  tableHeders={["නම", ""]} //"යොමු අංකය",
+                  tableHeders={["යොමු අංකය", "නම", ""]} //"යොමු අංකය",
                   dataList={this.state.medications}
                   isLoading={this.state.isLoading}
                 />

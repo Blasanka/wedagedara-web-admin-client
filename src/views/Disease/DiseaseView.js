@@ -9,7 +9,7 @@ import DeleteListTable from "components/DeleteListTable/DeleteListTable.js";
 // to network request
 import axios from "axios";
 
-export default class MedicalView extends React.Component {
+export default class DiseaseView extends React.Component {
   state = {
     diseases: [],
     isLoading: false
@@ -93,7 +93,7 @@ export default class MedicalView extends React.Component {
                 <DeleteListTable
                   submitType={"disease"}
                   tableHeders={["යොමු අංකය", "නම", ""]}
-                  dataList={this.diseases}
+                  dataList={this.state.diseases}
                   isLoading={this.state.isLoading}
                 />
               )
