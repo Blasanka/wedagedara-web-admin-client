@@ -150,6 +150,7 @@ class EditForm extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: "",
       name: "",
       description: "",
       image_url: "",
@@ -162,13 +163,27 @@ class EditForm extends React.Component {
     };
   }
 
-  // addFieldsToNewObject = newObj => {
-  // };
+  componentDidMount() {
+    this.setState({
+      id: this.props.selectedData.id,
+      name: this.props.selectedData.name,
+      description: this.props.selectedData.description,
+      image_url: this.props.selectedData.image_url,
+      location: this.props.selectedData.location,
+      phone_number: this.props.selectedData.phone_number,
+      duration: this.props.selectedData.duration,
+      prepare_method: this.props.selectedData.prepare_method,
+      solution: this.props.selectedData.solution,
+      medication_goods: this.props.selectedData.medication_goods,
+      cause: this.props.selectedData.cause
+    });
+  }
 
   handleSubmit = event => {
     event.preventDefault();
 
     const newDataObject = {
+      id: this.state.id,
       name: this.state.name,
       description: this.state.description,
       image_url: this.state.image_url,
@@ -197,17 +212,14 @@ class EditForm extends React.Component {
 
     if (fieldTypes.indexOf("solution") !== -1) {
       newDataObject.solution = this.state.solution;
-      newDataObject.search_solution = this.state.solution;
     }
 
     if (fieldTypes.indexOf("medication_goods") !== -1) {
       newDataObject.medication_goods = this.state.medication_goods;
-      newDataObject.search_medication_goods = this.state.medication_goods;
     }
 
     if (fieldTypes.indexOf("prepare_method") !== -1) {
       newDataObject.prepare_method = this.state.prepare_method;
-      newDataObject.search_prepare_method = this.state.prepare_method;
     }
 
     const validity = validateFormData(newDataObject);
@@ -217,16 +229,15 @@ class EditForm extends React.Component {
         errors: {}
       });
 
-      const submitRoute = `/${this.props.submitType}/update`;
+      const submitRoute = `/${this.props.submitType}/${this.state.id}`;
       console.log(submitRoute);
 
       axios
-        .post(submitRoute, newDataObject)
+        .put(submitRoute, newDataObject)
         .then(res => {
-          this.clearForm();
           this.setState({
-            loading: false,
-            snackBarOpen: true
+            loading: false
+            // snackBarOpen: true
           });
           console.log(`successfully submitted: status code: ${res.status}`);
         })
@@ -270,6 +281,7 @@ class EditForm extends React.Component {
 
   clearForm = () => {
     this.setState({
+      id: "",
       name: "",
       description: "",
       image_url: "",
@@ -620,7 +632,8 @@ EditForm.propTypes = {
   classes: PropTypes.object.isRequired,
   submitType: PropTypes.string.isRequired,
   cardSubHeader: PropTypes.string.isRequired,
-  textFieldsTypes: PropTypes.array.isRequired
+  textFieldsTypes: PropTypes.array.isRequired,
+  selectedData: PropTypes.object.isRequired
 };
 
 MySnackbarContentWrapper.propTypes = {

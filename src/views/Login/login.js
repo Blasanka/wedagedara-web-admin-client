@@ -102,7 +102,6 @@ class Login extends React.Component {
           errors: {},
           loading: false
         });
-        this.props.history.push("/admin/dashboard");
       })
       .catch(err => {
         console.error(err);
@@ -118,6 +117,8 @@ class Login extends React.Component {
     const FBIdToken = `Bearer ${token}`;
     localStorage.setItem("FBIdToken", FBIdToken);
     axios.defaults.headers.common["Authorization"] = FBIdToken;
+    // this.props.history.push("/admin/dashboard");
+    window.location.href = "/admin/dashboard";
   };
 
   handleChange = event => {

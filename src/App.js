@@ -6,7 +6,6 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Admin from "layouts/Admin.js";
 import UserProfile from "components/UserProfile/UserProfile.js";
 import Login from "views/Login/login.js";
-import LoginAuthRoute from "./util/LoginAuthRoute";
 import AuthRoute from "./util/AuthRoute";
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
@@ -18,7 +17,7 @@ import jwtDecode from "jwt-decode";
 const hist = createBrowserHistory();
 
 // axios.defaults.baseURL =
-//   "http://localhost:5000/wedagedara-717e9/asia-east2/api";
+//   "https://asia-east2-wedagedara-717e9.cloudfunctions.net/api";
 
 export default class App extends React.Component {
   authenticated = false;

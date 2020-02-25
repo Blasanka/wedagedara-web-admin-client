@@ -2,7 +2,7 @@ import React from "react";
 // core components
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import AddForm from "components/AddForm/AddForm.js";
-import EditForm from "components/EditForm/EditForm.js";
+import UpdateListTable from "components/UpdateListTable/UpdateListTable.js";
 import DataListTable from "components/DataListTable/DataListTable.js";
 import DeleteListTable from "components/DeleteListTable/DeleteListTable.js";
 
@@ -72,10 +72,11 @@ export default class DiseaseView extends React.Component {
             {
               tabName: "වෙනස් කරන්න",
               tabContent: (
-                <EditForm
+                <UpdateListTable
+                  tableHeders={["යොමු අංකය", "නම", ""]}
                   submitType={"disease"}
-                  cardSubHeader={"ව‌ෙද මැදුර‌ෙහි ත‌ොරතුරු ව‌ෙනස් කරන්න."}
-                  textFieldsTypes={[
+                  cardSubHeader={"බ‌ෙහ‌ෙත් වර්ගයන්හි ත‌ොරතුරු ව‌ෙනස් කරන්න."}
+                  fields={[
                     "id",
                     "name",
                     "description",
@@ -84,6 +85,8 @@ export default class DiseaseView extends React.Component {
                     "medication_goods",
                     "prepare_method"
                   ]}
+                  dataList={this.state.diseases}
+                  isLoading={this.state.isLoading}
                 />
               )
             },

@@ -9,7 +9,10 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 // core components
-import styles from "assets/jss/material-dashboard-react/components/tableStyle.js";
+import styles from "assets/jss/material-dashboard-react/components/DeleteTableStyle.js";
+
+// Delete icon
+import EditIcon from "@material-ui/icons/Edit";
 
 const useStyles = makeStyles(styles);
 
@@ -45,52 +48,11 @@ function CustomTable(props) {
                 hover
                 onClick={() => handleRowClick(true, data)}
               >
-                {data.image_url !== undefined && (
-                  <TableCell>
-                    <img
-                      src={data.image_url}
-                      alt={data.name}
-                      className={classes.tableImg}
-                    />
-                  </TableCell>
-                )}
+                {data.id !== undefined && <TableCell>{data.id}</TableCell>}
                 {data.name !== undefined && <TableCell>{data.name}</TableCell>}
-                {data.location !== undefined && (
-                  <TableCell>{data.location}</TableCell>
-                )}
-                {data.phone_number !== undefined && (
-                  <TableCell>{data.phone_number}</TableCell>
-                )}
-                {data.duration !== undefined && (
-                  <TableCell>{data.duration}</TableCell>
-                )}
-                {data.description !== undefined && (
-                  <TableCell>{`${data.description.substring(
-                    0,
-                    60
-                  )}...`}</TableCell>
-                )}
-                {data.cause !== undefined && (
-                  <TableCell>{`${data.cause.substring(0, 50)}...`}</TableCell>
-                )}
-                {data.solution !== undefined && (
-                  <TableCell>{`${data.solution.substring(
-                    0,
-                    50
-                  )}...`}</TableCell>
-                )}
-                {data.medication_goods !== undefined && (
-                  <TableCell>{`${data.medication_goods.substring(
-                    0,
-                    50
-                  )}...`}</TableCell>
-                )}
-                {data.prepare_method !== undefined && (
-                  <TableCell>{`${data.prepare_method.substring(
-                    0,
-                    50
-                  )}...`}</TableCell>
-                )}
+                <TableCell>
+                  <EditIcon className={classes.editIcon} />
+                </TableCell>
               </TableRow>
             );
           })}

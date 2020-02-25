@@ -82,6 +82,9 @@ const tableStyle = theme => ({
   },
   deleteIcon: {
     color: "#EE2222"
+  },
+  editIcon: {
+    color: "#22EE22"
   }
 });
 

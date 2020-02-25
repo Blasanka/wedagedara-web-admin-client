@@ -2,7 +2,7 @@ import React from "react";
 // core components
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import AddForm from "components/AddForm/AddForm.js";
-import EditForm from "components/EditForm/EditForm.js";
+import UpdateListTable from "components/UpdateListTable/UpdateListTable.js";
 import DataListTable from "components/DataListTable/DataListTable.js";
 import DeleteListTable from "components/DeleteListTable/DeleteListTable.js";
 
@@ -40,7 +40,7 @@ export default class DoctorView extends React.Component {
               tabName: "‌‌වෙද මහතුන්",
               tabContent: (
                 <DataListTable
-                  tableHeders={["රූපය", "නම", "ස්ථනය", "දුරකථන අංකය"]}
+                  tableHeders={["රූපය", "නම", "ස්ථනය", "දුරකථන අංකය", "විස්තර"]}
                   dataList={this.state.doctors}
                   isLoading={this.state.isLoading}
                 />
@@ -65,10 +65,11 @@ export default class DoctorView extends React.Component {
             {
               tabName: "වෙනස් කරන්න",
               tabContent: (
-                <EditForm
+                <UpdateListTable
+                  tableHeders={["යොමු අංකය", "නම", ""]}
                   submitType={"doctor"}
                   cardSubHeader={"ව‌ෙද මහතාග‌ේ ත‌ොරතුරු ව‌ෙනස් කරන්න."}
-                  textFieldsTypes={[
+                  fields={[
                     "id",
                     "name",
                     "description",
@@ -76,6 +77,8 @@ export default class DoctorView extends React.Component {
                     "phone_number",
                     "location"
                   ]}
+                  dataList={this.state.doctors}
+                  isLoading={this.state.isLoading}
                 />
               )
             },

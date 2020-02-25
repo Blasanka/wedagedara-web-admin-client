@@ -9,7 +9,8 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Paper from "@material-ui/core/Paper/Paper.js";
-import Table from "components/Table/Table.js";
+import UpdateTable from "components/UpdateTable/UpdateTable.js";
+import EditForm from "components/EditForm/EditForm.js";
 
 // icons
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -90,7 +91,7 @@ const styles = {
   }
 };
 
-class DataListTable extends React.Component {
+class UpdateListTable extends React.Component {
   constructor() {
     super();
     this.state = { state: false, selectedData: null };
@@ -101,7 +102,15 @@ class DataListTable extends React.Component {
   };
 
   render() {
-    const { tableHeders, dataList, isLoading, classes } = this.props;
+    const {
+      tableHeders,
+      dataList,
+      isLoading,
+      fields,
+      submitType,
+      cardSubHeader,
+      classes
+    } = this.props;
     const tableData = dataList;
     return (
       <GridContainer>
@@ -117,19 +126,18 @@ class DataListTable extends React.Component {
                 <ArrowBackIcon className={classes.img} />
                 අපස්සට යන්න
               </Paper>
-              <Card>
+              {/* <Card>
                 <CardHeader color="primary">
                   <div>නම: {this.state.selectedData.name}</div>
                 </CardHeader>
                 <CardBody>
-                  {/* <p>{this.state.selectedData.name}</p> */}
                   <img
-                    src={this.state.selectedData.image_url}
-                    alt={this.state.selectedData.image_url}
+                    src={this.state.selectedData.imageUrl}
+                    alt={this.state.selectedData.imageUrl}
                     className={classes.descImg}
                   />
                   <p>{this.state.selectedData.description}</p>
-                  <p>{this.state.selectedData.phone_number}</p>
+                  <p>{this.state.selectedData.phoneNumber}</p>
                   <p>{this.state.selectedData.location}</p>
                   <p>{this.state.selectedData.duration}</p>
                   {this.state.selectedData.cause && (
@@ -147,7 +155,13 @@ class DataListTable extends React.Component {
                     </div>
                   )}
                 </CardBody>
-              </Card>
+              </Card> */}
+              <EditForm
+                submitType={submitType}
+                cardSubHeader={cardSubHeader}
+                textFieldsTypes={fields}
+                selectedData={this.state.selectedData}
+              />
             </div>
           ) : (
             <Card>
@@ -160,10 +174,9 @@ class DataListTable extends React.Component {
                   ඔබන්න.
                 </p>
               </CardHeader>
-              {/* "ලිපිනය", */}
               <CardBody>
                 {!isLoading ? (
-                  <Table
+                  <UpdateTable
                     tableHeaderColor="primary"
                     tableHead={tableHeders}
                     tableData={tableData}
@@ -184,11 +197,14 @@ class DataListTable extends React.Component {
   }
 }
 
-DataListTable.propTypes = {
+UpdateListTable.propTypes = {
   tableHeders: PropTypes.array.isRequired,
   dataList: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  fields: PropTypes.array.isRequired,
+  cardSubHeader: PropTypes.string.isRequired,
+  submitType: PropTypes.string.isRequired
 };
 
-export default withStyles(styles)(DataListTable);
+export default withStyles(styles)(UpdateListTable);
