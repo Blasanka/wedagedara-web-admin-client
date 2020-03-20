@@ -57,7 +57,8 @@ export default class DoctorView extends React.Component {
                     "description",
                     "image_url",
                     "phone_number",
-                    "location"
+                    "location",
+                    "marker_location"
                   ]}
                 />
               )
@@ -75,7 +76,8 @@ export default class DoctorView extends React.Component {
                     "description",
                     "image_url",
                     "phone_number",
-                    "location"
+                    "location",
+                    "marker_location"
                   ]}
                   dataList={this.state.doctors}
                   isLoading={this.state.isLoading}

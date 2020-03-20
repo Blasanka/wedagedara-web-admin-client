@@ -57,7 +57,8 @@ export default class MedicalView extends React.Component {
                     "description",
                     "image_url",
                     "phone_number",
-                    "duration"
+                    "duration",
+                    "marker_location"
                   ]}
                 />
               )
@@ -75,7 +76,8 @@ export default class MedicalView extends React.Component {
                     "description",
                     "image_url",
                     "phone_number",
-                    "duration"
+                    "duration",
+                    "marker_location"
                   ]}
                   dataList={this.state.places}
                   isLoading={this.state.isLoading}

@@ -6,10 +6,21 @@ import {
   Marker
 } from "react-google-maps";
 
+// axios
+import axios from "axios";
+
+var locations = [];
+
+function getMarkers() {
+  axios.get("/doctors/").then(res => {
+    locations = res.data;
+  });
+}
+
 const CustomSkinMap = withScriptjs(
   withGoogleMap(() => (
     <GoogleMap
-      defaultZoom={13}
+      defaultZoom={7}
       defaultCenter={{ lat: 6.9271, lng: 79.8612 }}
       defaultOptions={{
         scrollwheel: false,
@@ -62,29 +73,33 @@ const CustomSkinMap = withScriptjs(
             featureType: "landscape.natural",
             elementType: "geometry.fill",
             stylers: [{ visibility: "on" }, { color: "#b8cb93" }]
-          },
-          { featureType: "poi.park", stylers: [{ visibility: "on" }] },
-          {
-            featureType: "poi.sports_complex",
-            stylers: [{ visibility: "on" }]
-          },
-          { featureType: "poi.medical", stylers: [{ visibility: "on" }] },
-          {
-            featureType: "poi.business",
-            stylers: [{ visibility: "simplified" }]
           }
         ]
       }}
     >
-      <Marker position={{ lat: 6.9271, lng: 79.8612 }} />
+      {locations &&
+        locations.map((loc, i) => {
+          if (loc.latitude != null) {
+            console.log(loc.latitude);
+            return (
+              <Marker
+                key={i}
+                position={{ lat: loc.latitude, lng: loc.longitude }}
+              />
+            );
+          } else {
+            console.log(loc.latitude);
+          }
+        })}
     </GoogleMap>
   ))
 );
 
 export default function Maps() {
+  getMarkers();
   return (
     <CustomSkinMap
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAx7OFZWmhUOa0nM2KEQHj6asz0SzD_3Yk"
+      googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}`}
       loadingElement={<div style={{ height: `100%` }} />}
       containerElement={<div style={{ height: `100vh` }} />}
       mapElement={<div style={{ height: `100%` }} />}

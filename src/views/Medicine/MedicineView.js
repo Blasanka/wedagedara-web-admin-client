@@ -55,7 +55,8 @@ export default class MedicineView extends React.Component {
                     "name",
                     "description",
                     "image_url",
-                    "location"
+                    "location",
+                    "marker_location"
                   ]}
                 />
               )
@@ -67,7 +68,13 @@ export default class MedicineView extends React.Component {
                   tableHeders={["යොමු අංකය", "නම", ""]}
                   submitType={"medication"}
                   cardSubHeader={"බ‌ෙහ‌ෙත් වර්ගය‌ෙ ත‌ොරතුරු ව‌ෙනස් කරන්න."}
-                  fields={["name", "description", "image_url", "location"]}
+                  fields={[
+                    "name",
+                    "description",
+                    "image_url",
+                    "location",
+                    "marker_location"
+                  ]}
                   dataList={this.state.medications}
                   isLoading={this.state.isLoading}
                 />

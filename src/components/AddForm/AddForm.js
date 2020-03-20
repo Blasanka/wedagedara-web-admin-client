@@ -23,6 +23,7 @@ import noUser from "../../assets/img/no_user.png";
 
 // my components
 import MyButton from "components/MyButton/MyButton.js";
+import AddMarkerMap from "./AddMarkerMap.js";
 
 // icons
 import DoneIcon from "@material-ui/icons/Done";
@@ -160,14 +161,21 @@ class AddForm extends React.Component {
       solution: "",
       medication_goods: "",
       prepare_method: "",
+      marker_location: {},
       errors: {},
       loading: false,
       snackBarOpen: false
     };
   }
 
-  // addFieldsToNewObject = newObj => {
-  // };
+  getMarkers = loc => {
+    this.setState({
+      markerLocation: {
+        ...loc
+      }
+    });
+    console.log(`Markers received to AddForm lat: ${loc.lat} lng: ${loc.lng}`);
+  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -216,6 +224,11 @@ class AddForm extends React.Component {
     if (fieldTypes.indexOf("prepare_method") !== -1) {
       newDataObject.prepare_method = this.state.prepare_method;
       newDataObject.search_prepare_method = this.state.prepare_method;
+    }
+
+    if (fieldTypes.indexOf("marker_location") !== -1) {
+      newDataObject.latitude = this.state.markerLocation.lat;
+      newDataObject.longitude = this.state.markerLocation.lng;
     }
 
     const validity = validateFormData(newDataObject);
@@ -288,6 +301,7 @@ class AddForm extends React.Component {
       solution: "",
       medication_goods: "",
       prepare_method: "",
+      marker_location: {},
       errors: {},
       loading: false,
       snackBarOpen: false
@@ -567,7 +581,14 @@ class AddForm extends React.Component {
                     )}
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
-                    <Card profile>සිතියම</Card>
+                    {textFieldsTypes.indexOf("marker_location") !== -1 && (
+                      <Card profile>
+                        <AddMarkerMap
+                          type={"Add"}
+                          getMarkers={this.getMarkers}
+                        />
+                      </Card>
+                    )}
                   </GridItem>
                 </GridContainer>
               </CardBody>
