@@ -12,7 +12,7 @@ import axios from "axios";
 var locations = [];
 
 function getMarkers() {
-  axios.get("/doctors/").then(res => {
+  axios.get("/locations/").then(res => {
     locations = res.data;
   });
 }

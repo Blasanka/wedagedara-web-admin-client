@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import PropTypes from "prop-types";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -25,9 +26,14 @@ import axios from "axios";
 
 const useStyles = makeStyles(styles);
 
-export default function AdminNavbarLinks() {
+AdminNavbarLinks.propTypes = {
+  searchAction: PropTypes.func.isRequired
+};
+
+export default function AdminNavbarLinks(props) {
   const classes = useStyles();
   const [openProfile, setOpenProfile] = React.useState(null);
+  const [searchText, setSearchText] = React.useState(null);
   const handleClickProfile = event => {
     if (openProfile && openProfile.contains(event.target)) {
       setOpenProfile(null);
@@ -45,6 +51,11 @@ export default function AdminNavbarLinks() {
     window.location.href = "/login";
   };
 
+  const onInputChange = event => {
+    console.log(event.target.value);
+    setSearchText(event.target.value);
+  };
+
   return (
     <div>
       <div className={classes.searchWrapper}>
@@ -56,11 +67,18 @@ export default function AdminNavbarLinks() {
             placeholder: "සොයන්න",
             inputProps: {
               "aria-label": "සොයන්න"
-            }
+            },
+            value: searchText,
+            onChange: onInputChange
           }}
+          name="search"
         />
         <Button color="white" aria-label="edit" justIcon round>
-          <Search />
+          <Search
+            onClick={() => {
+              props.searchAction(searchText);
+            }}
+          />
         </Button>
       </div>
       <div className={classes.manager}>

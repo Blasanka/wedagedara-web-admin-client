@@ -27,6 +27,12 @@ export default function Sidebar(props) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
   const { color, logo, image, logoText, routes } = props;
+  const [searchOpen, setSearchViewOpen] = React.useState(false);
+
+  const toggleSearchViewOpen = () => {
+    setSearchViewOpen(!searchOpen);
+  };
+
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
@@ -119,7 +125,7 @@ export default function Sidebar(props) {
           {brand}
           <div className={classes.sidebarWrapper}>
             {/* {props.rtlActive ? <RTLNavbarLinks /> : } */}
-            <AdminNavbarLinks />
+            <AdminNavbarLinks searchAction={toggleSearchViewOpen} />
             {links}
           </div>
           {image !== undefined ? (
