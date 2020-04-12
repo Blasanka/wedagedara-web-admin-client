@@ -12,9 +12,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
-import CardAvatar from "components/Card/CardAvatar.js";
 
 import routes from "routes.js";
 
@@ -106,7 +104,7 @@ export default function Admin({ ...rest }) {
       .get(`/search/${text}`)
       .then(res => {
         console.log(res.status);
-        if (res.status == 200) {
+        if (res.status === 200) {
           console.log(res.data);
           setSearchResult(res.data);
         } else {
@@ -195,7 +193,7 @@ export default function Admin({ ...rest }) {
               <div className={classes.container}>
                 <GridContainer>
                   {!isLoading ? (
-                    searchResult.length == 0 || error !== null ? (
+                    searchResult.length === 0 || error !== null ? (
                       <div className={classes.screenCenter}>
                         <p>No data found</p>
                       </div>

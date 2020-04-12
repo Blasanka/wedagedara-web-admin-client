@@ -76,6 +76,13 @@ const dashboardStyle = {
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  loadingHolder: {
+    width: "15px",
+    height: "7px",
+    backgroundColor: "#DDD",
+    float: "right",
+    margin: "4px"
   }
 };
 

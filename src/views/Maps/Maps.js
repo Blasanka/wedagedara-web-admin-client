@@ -80,7 +80,6 @@ const CustomSkinMap = withScriptjs(
       {locations &&
         locations.map((loc, i) => {
           if (loc.latitude != null) {
-            console.log(loc.latitude);
             return (
               <Marker
                 key={i}
@@ -89,6 +88,7 @@ const CustomSkinMap = withScriptjs(
             );
           } else {
             console.log(loc.latitude);
+            return <p></p>;
           }
         })}
     </GoogleMap>

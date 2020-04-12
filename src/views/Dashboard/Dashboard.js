@@ -24,10 +24,30 @@ import { dailySalesChart } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
+import axios from "axios";
+
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
+  const [statCounts, setStatCounts] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const classes = useStyles();
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get("/stats")
+      .then(res => {
+        setStatCounts(res.data);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
     <div>
       <GridContainer>
@@ -39,7 +59,13 @@ export default function Dashboard() {
                 <HealingIcon />
               </CardIcon>
               <p className={classes.cardCategory}>ර‌ෝගයන්</p>
-              <h3 className={classes.cardTitle}>+12300</h3>
+              <h3 className={classes.cardTitle}>
+                {isLoading ? (
+                  <div className={classes.loadingHolder}></div>
+                ) : (
+                  `+${statCounts && statCounts.diseases}`
+                )}
+              </h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -56,7 +82,13 @@ export default function Dashboard() {
                 <Person />
               </CardIcon>
               <p className={classes.cardCategory}>වෙද මහතුන්</p>
-              <h3 className={classes.cardTitle}>75</h3>
+              <h3 className={classes.cardTitle}>
+                {isLoading ? (
+                  <div className={classes.loadingHolder}></div>
+                ) : (
+                  `+${statCounts && statCounts.doctors}`
+                )}
+              </h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -74,7 +106,13 @@ export default function Dashboard() {
                 <LocalDrinkIcon />
               </CardIcon>
               <p className={classes.cardCategory}>බෙහෙත් වර්ග</p>
-              <h3 className={classes.cardTitle}>4,245</h3>
+              <h3 className={classes.cardTitle}>
+                {isLoading ? (
+                  <div className={classes.loadingHolder}></div>
+                ) : (
+                  `+${statCounts && statCounts.medication}`
+                )}
+              </h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -91,7 +129,13 @@ export default function Dashboard() {
                 <LocalHospitalIcon />
               </CardIcon>
               <p className={classes.cardCategory}>වෙද මැදුරු</p>
-              <h3 className={classes.cardTitle}>245</h3>
+              <h3 className={classes.cardTitle}>
+                {isLoading ? (
+                  <div className={classes.loadingHolder}></div>
+                ) : (
+                  `+${statCounts && statCounts.places}`
+                )}
+              </h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>

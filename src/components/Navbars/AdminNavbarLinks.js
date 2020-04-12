@@ -33,7 +33,7 @@ AdminNavbarLinks.propTypes = {
 export default function AdminNavbarLinks(props) {
   const classes = useStyles();
   const [openProfile, setOpenProfile] = React.useState(null);
-  const [searchText, setSearchText] = React.useState(null);
+  const [searchText, setSearchText] = React.useState("");
   const handleClickProfile = event => {
     if (openProfile && openProfile.contains(event.target)) {
       setOpenProfile(null);
