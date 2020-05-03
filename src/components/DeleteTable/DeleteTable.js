@@ -13,12 +13,34 @@ import styles from "assets/jss/material-dashboard-react/components/DeleteTableSt
 
 // Delete icon
 import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteWarningDialog from "./DeleteWarningDialog.js";
 
 const useStyles = makeStyles(styles);
 
 function CustomTable(props) {
   const classes = useStyles();
   const { tableHead, tableData, tableHeaderColor, handleRowClick } = props; // state,
+
+  // const [tableData, changeTableData] = React.useState(props.tableData);
+  const [selectedRow, setSelectedRow] = React.useState({});
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = (data) => {
+    setSelectedRow(data);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const removeDoctor = (index) => {
+    var array = [...tableData];
+    if (index !== -1) {
+      array.splice(index, 1);
+      // changeTableData(array);
+    }
+  };
 
   return (
     <div className={classes.tableResponsive}>
@@ -46,16 +68,10 @@ function CustomTable(props) {
                 key={key}
                 className={classes.tableBodyRow}
                 hover
-                onClick={() => handleRowClick(true, data)}
+                onClick={() => handleClickOpen(data)}
               >
                 {data.id !== undefined && <TableCell>{data.id}</TableCell>}
                 {data.name !== undefined && <TableCell>{data.name}</TableCell>}
-                {/* {data.location !== undefined && (
-                  <TableCell>{data.location}</TableCell>
-                )} */}
-                {/* {data.duration !== undefined && (
-                  <TableCell>{data.duration}</TableCell>
-                )} */}
                 <TableCell>
                   <DeleteIcon className={classes.deleteIcon} />
                 </TableCell>
@@ -64,12 +80,22 @@ function CustomTable(props) {
           })}
         </TableBody>
       </Table>
+      {open && (
+        <DeleteWarningDialog
+          open={open}
+          handleRowClick={() => {
+            handleRowClick(true, selectedRow);
+            removeDoctor(tableData.indexOf(selectedRow));
+          }}
+          handleClose={handleClose}
+        />
+      )}
     </div>
   );
 }
 
 CustomTable.defaultProps = {
-  tableHeaderColor: "gray"
+  tableHeaderColor: "gray",
 };
 
 CustomTable.propTypes = {
@@ -80,12 +106,12 @@ CustomTable.propTypes = {
     "success",
     "info",
     "rose",
-    "gray"
+    "gray",
   ]),
   tableHead: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  tableData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   history: PropTypes.object.isRequired,
-  handleRowClick: PropTypes.func.isRequired
+  handleRowClick: PropTypes.func.isRequired,
 };
 
 export default withRouter(CustomTable);

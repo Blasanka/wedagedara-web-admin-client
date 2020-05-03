@@ -38,11 +38,11 @@ export default function Dashboard() {
     setIsLoading(true);
     axios
       .get("/stats")
-      .then(res => {
+      .then((res) => {
         setStatCounts(res.data);
         setIsLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         setIsLoading(false);
       });
@@ -63,7 +63,8 @@ export default function Dashboard() {
                 {isLoading ? (
                   <div className={classes.loadingHolder}></div>
                 ) : (
-                  `+${statCounts && statCounts.diseases}`
+                  statCounts &&
+                  `+${statCounts?.diseases && statCounts.diseases}`
                 )}
               </h3>
             </CardHeader>
@@ -86,7 +87,7 @@ export default function Dashboard() {
                 {isLoading ? (
                   <div className={classes.loadingHolder}></div>
                 ) : (
-                  `+${statCounts && statCounts.doctors}`
+                  statCounts && `+${statCounts?.doctors && statCounts.doctors}`
                 )}
               </h3>
             </CardHeader>
@@ -110,7 +111,8 @@ export default function Dashboard() {
                 {isLoading ? (
                   <div className={classes.loadingHolder}></div>
                 ) : (
-                  `+${statCounts && statCounts.medication}`
+                  statCounts &&
+                  `+${statCounts?.medication && statCounts.medication}`
                 )}
               </h3>
             </CardHeader>
@@ -133,7 +135,7 @@ export default function Dashboard() {
                 {isLoading ? (
                   <div className={classes.loadingHolder}></div>
                 ) : (
-                  `+${statCounts && statCounts.places}`
+                  statCounts && `+${statCounts?.places && statCounts.places}`
                 )}
               </h3>
             </CardHeader>

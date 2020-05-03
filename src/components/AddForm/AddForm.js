@@ -51,7 +51,7 @@ const styles = {
     margin: "0",
     fontSize: "14px",
     marginTop: "0",
-    marginBottom: "0"
+    marginBottom: "0",
   },
   cardTitleWhite: {
     color: "#FFFFFF",
@@ -60,10 +60,10 @@ const styles = {
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   textField: {
-    margin: "10px auto 10px auto"
+    margin: "10px auto 10px auto",
   },
   imageWrapper: {
     textAlign: "left",
@@ -71,8 +71,8 @@ const styles = {
     changeImageButton: {
       position: "absolute",
       top: "50%",
-      left: "50%"
-    }
+      left: "50%",
+    },
   },
   profileImage: {
     width: 60,
@@ -80,41 +80,41 @@ const styles = {
     objectFit: "cover",
     maxWidth: "100%",
     borderRadius: "10%",
-    marginLeft: 6
+    marginLeft: 6,
   },
   customError: {
     color: "red",
     fontSize: "0.8rem",
-    marginTop: 10
+    marginTop: 10,
   },
   progress: {
-    position: "absolute"
-  }
+    position: "absolute",
+  },
 };
 
 const variantIcon = {
   success: CheckCircleIcon,
-  error: ErrorIcon
+  error: ErrorIcon,
 };
 
-const useStyles1 = makeStyles(theme => ({
+const useStyles1 = makeStyles((theme) => ({
   success: {
-    backgroundColor: green[600]
+    backgroundColor: green[600],
   },
   error: {
-    backgroundColor: theme.palette.error.dark
+    backgroundColor: theme.palette.error.dark,
   },
   icon: {
-    fontSize: 20
+    fontSize: 20,
   },
   iconVariant: {
     opacity: 0.9,
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   message: {
     display: "flex",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 }));
 
 function MySnackbarContentWrapper(props) {
@@ -140,7 +140,7 @@ function MySnackbarContentWrapper(props) {
           onClick={onClose}
         >
           <CloseIcon className={classes.icon} />
-        </IconButton>
+        </IconButton>,
       ]}
       {...other}
     />
@@ -164,26 +164,26 @@ class AddForm extends React.Component {
       marker_location: {},
       errors: {},
       loading: false,
-      snackBarOpen: false
+      snackBarOpen: false,
     };
   }
 
-  getMarkers = loc => {
+  getMarkers = (loc) => {
     this.setState({
       markerLocation: {
-        ...loc
-      }
+        ...loc,
+      },
     });
     console.log(`Markers received to AddForm lat: ${loc.lat} lng: ${loc.lng}`);
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     const newDataObject = {
       name: this.state.name,
       description: this.state.description,
-      search_name: this.state.name
+      search_name: this.state.name,
     };
 
     // this.addFieldsToNewObject(newDataObject);
@@ -226,7 +226,10 @@ class AddForm extends React.Component {
       newDataObject.search_prepare_method = this.state.prepare_method;
     }
 
-    if (fieldTypes.indexOf("marker_location") !== -1) {
+    if (
+      fieldTypes.indexOf("marker_location") !== -1 &&
+      this.state.markerLocation !== undefined
+    ) {
       newDataObject.latitude = this.state.markerLocation.lat;
       newDataObject.longitude = this.state.markerLocation.lng;
     }
@@ -235,7 +238,7 @@ class AddForm extends React.Component {
     if (validity.valid) {
       this.setState({
         loading: true,
-        errors: {}
+        errors: {},
       });
 
       const submitRoute = `/${this.props.submitType}`;
@@ -243,18 +246,18 @@ class AddForm extends React.Component {
 
       axios
         .post(submitRoute, newDataObject)
-        .then(res => {
+        .then((res) => {
           this.clearForm();
           this.setState({
             loading: false,
-            snackBarOpen: true
+            snackBarOpen: true,
           });
           console.log(`successfully submitted: status code: ${res.status}`);
         })
-        .catch(err => {
+        .catch((err) => {
           this.setState({
             loading: false,
-            errors: err.response !== undefined ? err.response.data : {}
+            errors: err.response !== undefined ? err.response.data : {},
           });
           console.error(
             `Could not submit filled data. Please try again! ${err.status}`
@@ -263,15 +266,15 @@ class AddForm extends React.Component {
     } else {
       this.setState({
         errors: validity.errors,
-        loading: validity.valid
+        loading: validity.valid,
       });
     }
   };
 
-  handleImageChange = event => {
+  handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = (e) => {
         this.setState({ image_url: e.target.result });
       };
       const image = event.target.files[0];
@@ -282,10 +285,10 @@ class AddForm extends React.Component {
       const submitRoute = `/${this.props.submitType}/image`;
       axios
         .post(submitRoute, formData)
-        .then(res => {
+        .then((res) => {
           this.setState({ image_url: res.data.image_url });
         })
-        .catch(err => console.error(err));
+        .catch((err) => console.error(err));
     }
   };
 
@@ -304,7 +307,7 @@ class AddForm extends React.Component {
       marker_location: {},
       errors: {},
       loading: false,
-      snackBarOpen: false
+      snackBarOpen: false,
     });
   };
 
@@ -313,22 +316,22 @@ class AddForm extends React.Component {
     fileInput.click();
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
   handleSnackBarClick = () => {
     this.setState({
-      snackBarOpen: true
+      snackBarOpen: true,
     });
   };
 
   handleSnackBarClose = () => {
     this.setState({
       ...this.state,
-      snackBarOpen: false
+      snackBarOpen: false,
     });
   };
   render() {
@@ -396,7 +399,7 @@ class AddForm extends React.Component {
                         value={this.state.name}
                         onChange={this.handleChange}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                         fullWidth
                       />
@@ -417,7 +420,7 @@ class AddForm extends React.Component {
                         value={this.state.location}
                         onChange={this.handleChange}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                         fullWidth
                       />
@@ -438,7 +441,7 @@ class AddForm extends React.Component {
                         value={this.state.phone_number}
                         onChange={this.handleChange}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                         fullWidth
                       />
@@ -459,7 +462,7 @@ class AddForm extends React.Component {
                         value={this.state.duration}
                         onChange={this.handleChange}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                         fullWidth
                       />
@@ -482,7 +485,7 @@ class AddForm extends React.Component {
                         value={this.state.description}
                         onChange={this.handleChange}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                         fullWidth
                       />
@@ -505,7 +508,7 @@ class AddForm extends React.Component {
                         value={this.state.cause}
                         onChange={this.handleChange}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                         fullWidth
                       />
@@ -528,7 +531,7 @@ class AddForm extends React.Component {
                         value={this.state.solution}
                         onChange={this.handleChange}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                         fullWidth
                       />
@@ -551,7 +554,7 @@ class AddForm extends React.Component {
                         value={this.state.medication_goods}
                         onChange={this.handleChange}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                         fullWidth
                       />
@@ -574,7 +577,7 @@ class AddForm extends React.Component {
                         value={this.state.prepare_method}
                         onChange={this.handleChange}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                         fullWidth
                       />
@@ -629,7 +632,7 @@ class AddForm extends React.Component {
                     // TransitionComponent={SlideTransition}
                     autoHideDuration={5000}
                     ContentProps={{
-                      "aria-describedby": "message-id"
+                      "aria-describedby": "message-id",
                     }}
                     // message={<span id="message-id">Successfully submitted!</span>}
                   >
@@ -653,13 +656,13 @@ AddForm.propTypes = {
   classes: PropTypes.object.isRequired,
   submitType: PropTypes.string.isRequired,
   cardSubHeader: PropTypes.string.isRequired,
-  textFieldsTypes: PropTypes.array.isRequired
+  textFieldsTypes: PropTypes.array.isRequired,
 };
 
 MySnackbarContentWrapper.propTypes = {
   className: PropTypes.object,
   message: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
-  variant: PropTypes.string.isRequired
+  variant: PropTypes.string.isRequired,
 };
 export default withStyles(styles)(AddForm);

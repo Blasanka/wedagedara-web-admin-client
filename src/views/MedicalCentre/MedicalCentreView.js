@@ -12,22 +12,25 @@ import axios from "axios";
 export default class MedicalView extends React.Component {
   state = {
     places: [],
-    isLoading: false
+    isLoading: false,
   };
 
   componentDidMount() {
     this.setState({ isLoading: true });
     axios
       .get("/places")
-      .then(res => {
+      .then((res) => {
         this.setState({
           places: res.data,
-          isLoading: false
+          isLoading: false,
         });
         console.log(this.state.places);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
+        this.setState({
+          isLoading: false,
+        });
       });
   }
 
@@ -38,13 +41,16 @@ export default class MedicalView extends React.Component {
           tabs={[
             {
               tabName: "‌‌වෙද මැදුරු",
-              tabContent: (
-                <DataListTable
-                  tableHeders={["රූපය", "නම", "දුරකථන අංකය", "දුර", "විස්තර"]}
-                  dataList={this.state.places}
-                  isLoading={this.state.isLoading}
-                />
-              )
+              tabContent:
+                !this.state.isLoading && this.state.places.length === 0 ? (
+                  <p style={{ textAlign: "center" }}>‌‌වෙද මැදුරු න‌ොමැත!</p>
+                ) : (
+                  <DataListTable
+                    tableHeders={["රූපය", "නම", "දුරකථන අංකය", "දුර", "විස්තර"]}
+                    dataList={this.state.places}
+                    isLoading={this.state.isLoading}
+                  />
+                ),
             },
             {
               tabName: "එකතු කරන්න",
@@ -58,43 +64,49 @@ export default class MedicalView extends React.Component {
                     "image_url",
                     "phone_number",
                     "duration",
-                    "marker_location"
+                    "marker_location",
                   ]}
                 />
-              )
+              ),
             },
             {
               tabName: "වෙනස් කරන්න",
-              tabContent: (
-                <UpdateListTable
-                  tableHeders={["යොමු අංකය", "නම", ""]}
-                  submitType={"place"}
-                  cardSubHeader={"ව‌ෙද මැදුර‌ෙහි ත‌ොරතුරු ව‌ෙනස් කරන්න."}
-                  fields={[
-                    "id",
-                    "name",
-                    "description",
-                    "image_url",
-                    "phone_number",
-                    "duration",
-                    "marker_location"
-                  ]}
-                  dataList={this.state.places}
-                  isLoading={this.state.isLoading}
-                />
-              )
+              tabContent:
+                !this.state.isLoading && this.state.places.length === 0 ? (
+                  <p style={{ textAlign: "center" }}>‌‌වෙද මැදුරු න‌ොමැත!</p>
+                ) : (
+                  <UpdateListTable
+                    tableHeders={["යොමු අංකය", "නම", ""]}
+                    submitType={"place"}
+                    cardSubHeader={"ව‌ෙද මැදුර‌ෙහි ත‌ොරතුරු ව‌ෙනස් කරන්න."}
+                    fields={[
+                      "id",
+                      "name",
+                      "description",
+                      "image_url",
+                      "phone_number",
+                      "duration",
+                      "marker_location",
+                    ]}
+                    dataList={this.state.places}
+                    isLoading={this.state.isLoading}
+                  />
+                ),
             },
             {
               tabName: "ඉවත් කරන්න",
-              tabContent: (
-                <DeleteListTable
-                  submitType={"place"}
-                  tableHeders={["යොමු අංකය", "නම", ""]} //"යොමු අංකය",
-                  dataList={this.state.places}
-                  isLoading={this.state.isLoading}
-                />
-              )
-            }
+              tabContent:
+                !this.state.isLoading && this.state.places.length === 0 ? (
+                  <p style={{ textAlign: "center" }}>‌‌වෙද මැදුරු න‌ොමැත!</p>
+                ) : (
+                  <DeleteListTable
+                    submitType={"place"}
+                    tableHeders={["යොමු අංකය", "නම", ""]} //"යොමු අංකය",
+                    dataList={this.state.places}
+                    isLoading={this.state.isLoading}
+                  />
+                ),
+            },
           ]}
         />
       </div>

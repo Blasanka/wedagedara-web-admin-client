@@ -12,21 +12,24 @@ import axios from "axios";
 export default class MedicineView extends React.Component {
   state = {
     medications: [],
-    isLoading: false
+    isLoading: false,
   };
 
   componentDidMount() {
     this.setState({ isLoading: true });
     axios
       .get("/medications")
-      .then(res => {
+      .then((res) => {
         this.setState({
           medications: res.data,
-          isLoading: false
+          isLoading: false,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
+        this.setState({
+          isLoading: false,
+        });
       });
   }
 
@@ -37,13 +40,16 @@ export default class MedicineView extends React.Component {
           tabs={[
             {
               tabName: "‌‌බෙහෙත් වර්ග",
-              tabContent: (
-                <DataListTable
-                  tableHeders={["රූපය", "නම", "ස්ථානයන්", "විස්තර"]}
-                  dataList={this.state.medications}
-                  isLoading={this.state.isLoading}
-                />
-              )
+              tabContent:
+                !this.state.isLoading && this.state.medications.length === 0 ? (
+                  <p style={{ textAlign: "center" }}>බෙහෙත් වර්ග න‌ොමැත!</p>
+                ) : (
+                  <DataListTable
+                    tableHeders={["රූපය", "නම", "ස්ථානයන්", "විස්තර"]}
+                    dataList={this.state.medications}
+                    isLoading={this.state.isLoading}
+                  />
+                ),
             },
             {
               tabName: "එකතු කරන්න",
@@ -56,41 +62,47 @@ export default class MedicineView extends React.Component {
                     "description",
                     "image_url",
                     "location",
-                    "marker_location"
+                    "marker_location",
                   ]}
                 />
-              )
+              ),
             },
             {
               tabName: "වෙනස් කරන්න",
-              tabContent: (
-                <UpdateListTable
-                  tableHeders={["යොමු අංකය", "නම", ""]}
-                  submitType={"medication"}
-                  cardSubHeader={"බ‌ෙහ‌ෙත් වර්ගය‌ෙ ත‌ොරතුරු ව‌ෙනස් කරන්න."}
-                  fields={[
-                    "name",
-                    "description",
-                    "image_url",
-                    "location",
-                    "marker_location"
-                  ]}
-                  dataList={this.state.medications}
-                  isLoading={this.state.isLoading}
-                />
-              )
+              tabContent:
+                !this.state.isLoading && this.state.medications.length === 0 ? (
+                  <p style={{ textAlign: "center" }}>බෙහෙත් වර්ග න‌ොමැත!</p>
+                ) : (
+                  <UpdateListTable
+                    tableHeders={["යොමු අංකය", "නම", ""]}
+                    submitType={"medication"}
+                    cardSubHeader={"බ‌ෙහ‌ෙත් වර්ගය‌ේ ත‌ොරතුරු ව‌ෙනස් කරන්න."}
+                    fields={[
+                      "name",
+                      "description",
+                      "image_url",
+                      "location",
+                      "marker_location",
+                    ]}
+                    dataList={this.state.medications}
+                    isLoading={this.state.isLoading}
+                  />
+                ),
             },
             {
               tabName: "ඉවත් කරන්න",
-              tabContent: (
-                <DeleteListTable
-                  submitType={"medication"}
-                  tableHeders={["යොමු අංකය", "නම", ""]} //"යොමු අංකය",
-                  dataList={this.state.medications}
-                  isLoading={this.state.isLoading}
-                />
-              )
-            }
+              tabContent:
+                !this.state.isLoading && this.state.medications.length === 0 ? (
+                  <p style={{ textAlign: "center" }}>බෙහෙත් වර්ග න‌ොමැත!</p>
+                ) : (
+                  <DeleteListTable
+                    submitType={"medication"}
+                    tableHeders={["යොමු අංකය", "නම", ""]} //"යොමු අංකය",
+                    dataList={this.state.medications}
+                    isLoading={this.state.isLoading}
+                  />
+                ),
+            },
           ]}
         />
       </div>
